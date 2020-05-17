@@ -5,7 +5,7 @@
 #include "../../Chunk/Chunk.h"
 #include "../../WorldConstants.h"
 
-void SuperFlatGenerator::generateTerrainFor(Chunk& chunk)
+void SuperFlatGenerator::generateTerrainFor(Chunk &chunk)
 {
     for (int x = 0; x < CHUNK_SIZE; ++x)
         for (int z = 0; z < CHUNK_SIZE; ++z) {

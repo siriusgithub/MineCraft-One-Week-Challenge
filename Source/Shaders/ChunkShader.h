@@ -3,17 +3,12 @@
 
 #include "BasicShader.h"
 
-class ChunkShader : public BasicShader
-{
-    public:
-        ChunkShader();
+class ChunkShader : public BasicShader {
+  public:
+    ChunkShader();
 
-        void loadLighting(float light);
-        void loadDTime(float dayTime);
-    private:
-        void getUniforms() override;
-        GLuint lighting;
-        GLuint dtime;
+  private:
+    void getUniforms() override;
 };
 
 #endif // CHUNKSHADER_H_INCLUDED

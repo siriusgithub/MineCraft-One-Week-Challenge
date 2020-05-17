@@ -5,7 +5,7 @@
 
 #include "../Config.h"
 
-glm::mat4 makeModelMatrix(const Entity& entity)
+glm::mat4 makeModelMatrix(const Entity &entity)
 {
     glm::mat4 matrix;
 
@@ -18,9 +18,9 @@ glm::mat4 makeModelMatrix(const Entity& entity)
     return matrix;
 }
 
-glm::mat4 makeViewMatrix(const Camera& camera)
+glm::mat4 makeViewMatrix(const Camera &camera)
 {
-    glm::mat4 matrix;
+    glm::mat4 matrix(1.f);
 
     matrix = glm::rotate(matrix, glm::radians(camera.rotation.x), {1, 0, 0});
     matrix = glm::rotate(matrix, glm::radians(camera.rotation.y), {0, 1, 0});
@@ -31,11 +31,11 @@ glm::mat4 makeViewMatrix(const Camera& camera)
     return matrix;
 }
 
-glm::mat4 makeProjectionMatrix(const Config& config)
+glm::mat4 makeProjectionMatrix(const Config &config)
 {
-    float x = config.windowX;
-    float y = config.windowY;
-    float fov = config.fov;
+    float x = (float)config.windowX;
+    float y = (float)config.windowY;
+    float fov = (float)config.fov;
 
     return glm::perspective(glm::radians(fov), x / y, 0.1f, 2000.0f);
 }

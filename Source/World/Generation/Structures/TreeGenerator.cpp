@@ -5,16 +5,17 @@
 
 constexpr BlockId CACTUS = BlockId::Cactus;
 
-namespace
-{
-void makeCactus1 (Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+namespace {
+void makeCactus1(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                 int z)
 {
     StructureBuilder builder;
     builder.makeColumn(x, z, y, rand.intInRange(4, 7), CACTUS);
     builder.build(chunk);
 }
 
-void makeCactus2 (Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+void makeCactus2(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                 int z)
 {
     StructureBuilder builder;
     int height = rand.intInRange(6, 8);
@@ -30,8 +31,8 @@ void makeCactus2 (Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, in
     builder.build(chunk);
 }
 
-
-void makeCactus3 (Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+void makeCactus3(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                 int z)
 {
     StructureBuilder builder;
     int height = rand.intInRange(6, 8);
@@ -46,9 +47,10 @@ void makeCactus3 (Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, in
 
     builder.build(chunk);
 }
-}//name space
+} // namespace
 
-void makeOakTree(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+void makeOakTree(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                 int z)
 {
     StructureBuilder builder;
 
@@ -56,8 +58,10 @@ void makeOakTree(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int
     int leafSize = 2;
 
     int newY = h + y;
-    builder.fill(newY,      x - leafSize, x + leafSize, z - leafSize, z + leafSize, BlockId::OakLeaf);
-    builder.fill(newY - 1,  x - leafSize, x + leafSize, z - leafSize, z + leafSize, BlockId::OakLeaf);
+    builder.fill(newY, x - leafSize, x + leafSize, z - leafSize, z + leafSize,
+                 BlockId::OakLeaf);
+    builder.fill(newY - 1, x - leafSize, x + leafSize, z - leafSize,
+                 z + leafSize, BlockId::OakLeaf);
 
     for (int32_t zLeaf = -leafSize + 1; zLeaf <= leafSize - 1; zLeaf++) {
         builder.addBlock(x, newY + 1, z + zLeaf, BlockId::OakLeaf);
@@ -71,7 +75,8 @@ void makeOakTree(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int
     builder.build(chunk);
 }
 
-void makePalmTree(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+void makePalmTree(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                  int z)
 {
     StructureBuilder builder;
 
@@ -85,30 +90,31 @@ void makePalmTree(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, in
         builder.addBlock(x, y + height, zLeaf + z, BlockId::OakLeaf);
     }
 
-    builder.addBlock(x,             y + height - 1, z + diameter,   BlockId::OakLeaf);
-    builder.addBlock(x,             y + height - 1, z - diameter,   BlockId::OakLeaf);
-    builder.addBlock(x + diameter,  y + height - 1, z,              BlockId::OakLeaf);
-    builder.addBlock(x - diameter,  y + height - 1, z,              BlockId::OakLeaf);
-    builder.addBlock(x,             y + height + 1, z,              BlockId::OakLeaf);
+    builder.addBlock(x, y + height - 1, z + diameter, BlockId::OakLeaf);
+    builder.addBlock(x, y + height - 1, z - diameter, BlockId::OakLeaf);
+    builder.addBlock(x + diameter, y + height - 1, z, BlockId::OakLeaf);
+    builder.addBlock(x - diameter, y + height - 1, z, BlockId::OakLeaf);
+    builder.addBlock(x, y + height + 1, z, BlockId::OakLeaf);
 
     builder.makeColumn(x, z, y, height, BlockId::OakBark);
     builder.build(chunk);
 }
 
-void makeCactus(Chunk& chunk, Random<std::minstd_rand>& rand, int x, int y, int z)
+void makeCactus(Chunk &chunk, Random<std::minstd_rand> &rand, int x, int y,
+                int z)
 {
     int cac = rand.intInRange(0, 2);
 
     switch (cac) {
-    case 0:
-        makeCactus1(chunk, rand, x, y, z);
-        break;
+        case 0:
+            makeCactus1(chunk, rand, x, y, z);
+            break;
 
-    case 1:
-        makeCactus2(chunk, rand, x, y, z);
-        break;
+        case 1:
+            makeCactus2(chunk, rand, x, y, z);
+            break;
 
-    case 2:
-        makeCactus3(chunk, rand, x, y, z);
+        case 2:
+            makeCactus3(chunk, rand, x, y, z);
     }
 }

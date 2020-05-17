@@ -4,18 +4,17 @@
 #include "../Maths/glm.h"
 
 struct AABB {
-    AABB(const glm::vec3& dim)
-        :   dimensions  (dim)
+    AABB(const glm::vec3 &dim)
+        : dimensions(dim)
     {
-
     }
 
-    void update(const glm::vec3& location)
+    void update(const glm::vec3 &location)
     {
         position = location;
     }
 
-    glm::vec3 getVN(const glm::vec3& normal)  const
+    glm::vec3 getVN(const glm::vec3 &normal) const
     {
         glm::vec3 res = position;
 
@@ -32,7 +31,7 @@ struct AABB {
         return res;
     }
 
-    glm::vec3 getVP(const glm::vec3& normal) const
+    glm::vec3 getVP(const glm::vec3 &normal) const
     {
         glm::vec3 res = position;
 

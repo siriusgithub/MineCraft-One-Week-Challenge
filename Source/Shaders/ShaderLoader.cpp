@@ -2,12 +2,11 @@
 
 #include "../Util/FileUtil.h"
 
-#include "../GLAD/glad.h"
+#include "../glad/glad.h"
 #include <stdexcept>
 
-namespace
-{
-GLuint compileShader(const GLchar* source, GLenum shaderType)
+namespace {
+GLuint compileShader(const GLchar *source, GLenum shaderType)
 {
     auto shaderID = glCreateShader(shaderType);
 
@@ -18,9 +17,10 @@ GLuint compileShader(const GLchar* source, GLenum shaderType)
     GLchar infoLog[512];
 
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &isSuccess);
-    if(!isSuccess) {
+    if (!isSuccess) {
         glGetShaderInfoLog(shaderID, 512, nullptr, infoLog);
-        throw std::runtime_error ("Unable to load a shader: " + std::string(infoLog));
+        throw std::runtime_error("Unable to load a shader: " +
+                                 std::string(infoLog));
     }
 
     return shaderID;
@@ -37,16 +37,18 @@ GLuint linkProgram(GLuint vertexShaderID, GLuint fragmentShaderID)
 
     return id;
 }
-}
+} // namespace
 
-GLuint loadShaders(const std::string& vertexShader,
-                   const std::string& fragmentShader)
+GLuint loadShaders(const std::string &vertexShader,
+                   const std::string &fragmentShader)
 {
-    auto vertexSource   = getFileContents("Shaders/" + vertexShader     + ".vert");
-    auto fragmentSource = getFileContents("Shaders/" + fragmentShader   + ".frag");
+    auto vertexSource = getFileContents("Shaders/" + vertexShader + ".vert");
+    auto fragmentSource =
+        getFileContents("Shaders/" + fragmentShader + ".frag");
 
-    auto vertexShaderID     = compileShader(vertexSource.c_str(),   GL_VERTEX_SHADER);
-    auto fragmentShaderID   = compileShader(fragmentSource.c_str(), GL_FRAGMENT_SHADER);
+    auto vertexShaderID = compileShader(vertexSource.c_str(), GL_VERTEX_SHADER);
+    auto fragmentShaderID =
+        compileShader(fragmentSource.c_str(), GL_FRAGMENT_SHADER);
 
     auto shaderID = linkProgram(vertexShaderID, fragmentShaderID);
 

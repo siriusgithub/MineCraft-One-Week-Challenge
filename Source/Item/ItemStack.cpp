@@ -2,10 +2,11 @@
 
 #include <algorithm>
 
-ItemStack::ItemStack(const Material& material, int amount)
-    :   m_pMaterial     (&material)
-    ,   m_numInStack    (amount)
-{ }
+ItemStack::ItemStack(const Material &material, int amount)
+    : m_pMaterial(&material)
+    , m_numInStack(amount)
+{
+}
 
 int ItemStack::add(int amount)
 {
@@ -15,7 +16,8 @@ int ItemStack::add(int amount)
         int leftOver = m_numInStack - m_pMaterial->maxStackSize;
         m_numInStack = m_pMaterial->maxStackSize;
         return leftOver;
-    } else {
+    }
+    else {
         return 0;
     }
 }
@@ -33,7 +35,7 @@ int ItemStack::getNumInStack() const
     return m_numInStack;
 }
 
-const Material& ItemStack::getMaterial() const
+const Material &ItemStack::getMaterial() const
 {
     return *m_pMaterial;
 }

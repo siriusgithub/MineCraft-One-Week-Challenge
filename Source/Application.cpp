@@ -1,17 +1,18 @@
 #include "Application.h"
-#include <iostream>
 #include "States/PlayingState.h"
 #include "World/Block/BlockDatabase.h"
+#include <iostream>
 
-Application::Application(const Config& config)
-    :   m_context   (config)
-    ,   m_camera    (config)
+Application::Application(const Config &config)
+    : m_context(config)
+    , m_camera(config)
+    , m_config(config)
 {
     BlockDatabase::get();
     pushState<StatePlaying>(*this, config);
-
-    g_Config = config;
 }
+
+float g_timeElapsed = 0;
 
 void Application::runLoop()
 {
@@ -22,8 +23,7 @@ void Application::runLoop()
 
     while (m_context.window.isOpen() && !m_states.empty()) {
         auto deltaTime = dtTimer.restart();
-        g_info.deltaTime = deltaTime.asSeconds();
-        auto& state = *m_states.back();
+        auto &state = *m_states.back();
 
         state.handleInput();
         state.update(deltaTime.asSeconds());
@@ -39,7 +39,8 @@ void Application::runLoop()
         }
 
         m = dt.restart();
-        g_info.elapsedTime += m.asSeconds();
+
+        g_timeElapsed += m.asSeconds();
     }
 }
 
@@ -47,28 +48,28 @@ void Application::handleEvents()
 {
     sf::Event e;
     while (m_context.window.pollEvent(e)) {
-        switch(e.type) {
-        case sf::Event::Closed:
-            m_context.window.close();
-            break;
-
-        case sf::Event::KeyPressed:
-            switch(e.key.code) {
-            case sf::Keyboard::Escape:
+        m_states.back()->handleEvent(e);
+        switch (e.type) {
+            case sf::Event::Closed:
                 m_context.window.close();
+                break;
+
+            case sf::Event::KeyPressed:
+                switch (e.key.code) {
+                    case sf::Keyboard::Escape:
+                        m_context.window.close();
+                        break;
+
+                    default:
+                        break;
+                }
                 break;
 
             default:
                 break;
-            }
-            break;
-
-        default:
-            break;
         }
     }
 }
-
 
 void Application::popState()
 {
